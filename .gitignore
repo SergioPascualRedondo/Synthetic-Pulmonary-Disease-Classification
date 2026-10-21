@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+build/
+dist/
+*.egg-info/
+reports/*_executed.ipynb
+!reports/baseline_executed_notebook.ipynb
+
