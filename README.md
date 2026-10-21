@@ -120,4 +120,3 @@ See [Reproducibility](docs/reproducibility.md) for the full protocol.
 ## License
 
 Code is released under the [MIT License](LICENSE). The synthetic dataset is included for educational and research demonstrations.
-
