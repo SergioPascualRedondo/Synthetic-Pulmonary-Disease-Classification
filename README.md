@@ -1,7 +1,7 @@
 # Synthetic Pulmonary Disease Classification
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![CI](https://github.com/SergioPascualRedondo/synthetic-pulmonary-disease-classification/actions/workflows/ci.yml/badge.svg)](https://github.com/SergioPascualRedondo/synthetic-pulmonary-disease-classification/actions/workflows/ci.yml)
+[![CI](https://github.com/SergioPascualRedondo/Synthetic-Pulmonary-Disease-Classification/actions/workflows/ci.yml/badge.svg)](https://github.com/SergioPascualRedondo/Synthetic-Pulmonary-Disease-Classification/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Data: Synthetic](https://img.shields.io/badge/data-synthetic-7B61FF)](docs/methodology.md)
 
@@ -46,7 +46,7 @@ Fifteen features represent demographics, vital signs, gas exchange, acid–base 
 ### Option 1 — pip
 
 ```bash
-git clone https://github.com/SergioPascualRedondo/synthetic-pulmonary-disease-classification.git
+git clone https://github.com/SergioPascualRedondo/Synthetic-Pulmonary-Disease-Classification.git
 cd synthetic-pulmonary-disease-classification
 
 python -m venv .venv
