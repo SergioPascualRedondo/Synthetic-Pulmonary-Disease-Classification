@@ -1,117 +1,164 @@
-# Synthetic Pulmonary Disease Classification
+# Can Synthetic Physiology Distinguish Pulmonary Disease Patterns?
+## A Reproducible Multiclass Machine Learning Analysis
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/SergioPascualRedondo/Synthetic-Pulmonary-Disease-Classification/actions/workflows/ci.yml/badge.svg)](https://github.com/SergioPascualRedondo/Synthetic-Pulmonary-Disease-Classification/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Data: Synthetic](https://img.shields.io/badge/data-synthetic-7B61FF)](docs/methodology.md)
 
-A reproducible machine-learning project that generates a physiology-inspired synthetic pulmonary dataset and compares classifiers across seven respiratory and hypoxia-related patterns.
+AI for Medicine project using a physiology-inspired synthetic pulmonary dataset.
 
-> **Educational project — not a medical device.** The dataset is simulated and the models must not be used for diagnosis, triage, or patient care.
+The goal is not only to classify seven respiratory and hypoxia-related patterns, but also to build a fully reproducible workflow in which data generation, validation, model selection, final evaluation, and interpretation are clearly separated.
 
-## Project overview
+The seven classes are:
 
-The project models seven classes:
+1. Healthy
+2. Altitude-related hypoxia
+3. Anemic hypoxia
+4. Asthma
+5. Pulmonary edema
+6. Pulmonary fibrosis
+7. Emphysema
 
-- `healthy`
-- `hypoxia_altitude`
-- `hypoxia_anemic`
-- `asthma`
-- `edema`
-- `fibrosis`
-- `emphysema`
+> **Educational project — not a medical device.** The data are simulated and the models must not be used for diagnosis, triage, or patient care.
 
-Fifteen features represent demographics, vital signs, gas exchange, acid–base status, oxygen transport, spirometry, diffusion, imaging surrogates, and congestion. Data generation includes class imbalance, noise, and overlapping distributions so that classification cannot be reduced to hard-coded rules.
-
-![Synthetic class distribution](docs/assets/class_distribution.png)
-
-## Repository structure
+## Main Files
 
 ```text
-.
-├── data/processed/                 # Reproducible synthetic dataset
-├── docs/                           # Methodology, data dictionary, reproducibility
-├── notebooks/                     # Clean analysis notebook
-├── reports/                       # Executed baseline and regenerated reports
-├── scripts/reproduce.py           # One-command notebook execution
-├── src/pulmonary_disease/         # Reusable data-generation package
-├── tests/                          # Determinism and validity checks
-├── environment.yml                # Conda environment
-├── pyproject.toml                 # Package and dependency definition
-└── requirements.txt               # pip installation
+notebooks/pulmonary_disease_classification.ipynb   Main executable notebook
+data/raw/synthetic_pulmonary_dataset.csv           Versioned synthetic dataset
+src/                                                Reusable Python modules
+scripts/generate_results.py                         Regenerates saved figures and tables
+scripts/reproduce.py                                Executes the notebook in a clean kernel
+results/figures/                                    Saved analysis plots
+results/tables/                                     Saved model results
+docs/                                               Methodology and data dictionary
+requirements.txt                                    Pinned Python environment
 ```
 
-## Quick start
+## Method
 
-### Option 1 — pip
+The dataset contains 2,150 simulated observations and 15 clinical features covering demographics, vital signs, gas exchange, acid–base balance, oxygen transport, spirometry, diffusion capacity, imaging surrogates, and congestion.
+
+The modelling workflow uses:
+
+- a fixed random seed for deterministic data generation;
+- explicit schema and physiological-range validation;
+- a locked 30% stratified test set;
+- 3-fold cross-validation on the development set;
+- hyperparameter tuning using macro-averaged F1;
+- Decision Tree, Gaussian Naive Bayes, and Random Forest classifiers;
+- final per-class metrics and confusion-matrix analysis;
+- permutation importance for model interpretation.
+
+Model selection is based only on development-set cross-validation. The locked test set is used once for descriptive final evaluation, reducing optimistic selection bias.
+
+<img src="pulmonary_disease_pipeline.svg" width="900">
+
+*Figure 1. Reproducible workflow from physiology-inspired cohort generation to locked-test evaluation and interpretation.*
+
+## How to Run
+
+Clone the repository, create an environment, and install the pinned dependencies:
 
 ```bash
 git clone https://github.com/SergioPascualRedondo/Synthetic-Pulmonary-Disease-Classification.git
-cd synthetic-pulmonary-disease-classification
+cd Synthetic-Pulmonary-Disease-Classification
 
 python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# macOS/Linux
-source .venv/bin/activate
-
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python scripts/reproduce.py
 ```
 
-The executed notebook is written to `reports/pulmonary_disease_classification_executed.ipynb`.
+Activate the environment on Windows:
 
-### Option 2 — Conda
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Or on macOS/Linux:
 
 ```bash
-conda env create -f environment.yml
-conda activate pulmonary-disease-ml
+source .venv/bin/activate
+```
+
+Then install and reproduce the saved results:
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python scripts/generate_results.py
 python scripts/reproduce.py
 ```
 
-To explore interactively:
+To explore the analysis interactively:
 
 ```bash
 jupyter lab notebooks/pulmonary_disease_classification.ipynb
 ```
 
+## Main Results
+
+The Random Forest was selected because it achieved the highest development-set cross-validated macro-F1. Gaussian Naive Bayes produced a slightly higher locked-test score, but the test set was not used to change the selected model.
+
+| Model | Development CV macro-F1 | Test accuracy | Test macro-F1 |
+| --- | ---: | ---: | ---: |
+| Random Forest | 0.962 | 0.960 | 0.960 |
+| Gaussian Naive Bayes | 0.961 | 0.963 | 0.964 |
+| Decision Tree | 0.907 | 0.927 | 0.926 |
+
+The selected Random Forest reached a test macro-F1 of 0.960. Class-level F1 ranged from 0.925 for anemic hypoxia to 1.000 for emphysema. These values reflect the internal consistency of the simulator and must not be interpreted as clinical performance.
+
+![Locked-test confusion matrix](results/figures/final_test/confusion_matrix.png)
+
+The strongest permutation-importance signals are available in the versioned explainability table and figure:
+
+![Permutation importance](results/figures/explainability/permutation_importance.png)
+
+## Repository Structure
+
+```text
+.
+├── data/
+│   └── raw/
+├── docs/
+├── notebooks/
+├── reports/
+├── results/
+│   ├── figures/
+│   │   ├── eda/
+│   │   ├── explainability/
+│   │   └── final_test/
+│   └── tables/
+│       ├── cv/
+│       ├── explainability/
+│       └── final_test/
+├── scripts/
+├── src/
+│   └── pulmonary_disease/
+├── tests/
+├── pulmonary_disease_pipeline.svg
+└── requirements.txt
+```
+
 ## Reproducibility
 
-- The random seed is fixed at `42`.
-- The dataset is regenerated from source code on every clean run.
-- Tests verify determinism, schema, class counts, missing values, and physiological bounds.
-- The CI workflow runs the test suite on every push and pull request.
-- The original executed baseline is retained in `reports/baseline_executed_notebook.ipynb` for provenance.
+The repository includes:
 
-See [Reproducibility](docs/reproducibility.md) for the full protocol.
+- a fixed random seed;
+- pinned package versions;
+- a versioned synthetic dataset;
+- saved result tables and figures;
+- source code separated into helper modules;
+- deterministic dataset tests and continuous integration;
+- the original executed notebook for provenance.
 
-## Analysis workflow
+See the [reproducibility protocol](docs/reproducibility.md), [methodology](docs/methodology.md), and [data dictionary](docs/data_dictionary.md) for details.
 
-1. Generate a synthetic cohort using physiology-inspired relationships.
-2. Validate schema, missingness, ranges, and class balance.
-3. Explore distributions, correlations, and between-class overlap.
-4. Create a stratified train/test split.
-5. Tune Decision Tree, Gaussian Naive Bayes, and Random Forest models.
-6. Compare accuracy and macro-averaged precision, recall, and F1.
-7. Inspect confusion matrices and permutation importance.
+## Limitations
 
-![Example confusion matrix](docs/assets/confusion_matrix.png)
-
-## Documentation
-
-- [Methodology and assumptions](docs/methodology.md)
-- [Data dictionary](docs/data_dictionary.md)
-- [Reproducibility protocol](docs/reproducibility.md)
-- [Contributing guide](CONTRIBUTING.md)
-
-## Known limitations
-
-- Synthetic labels are generated from the same latent mechanisms that shape the features.
+- Labels and features originate from the same simulated mechanisms.
 - The dataset has no external or clinical validation.
-- Simplified physiological relationships do not capture all comorbidities, treatments, measurement artifacts, or demographic effects.
-- High model performance on synthetic data does not imply clinical usefulness.
-- A stronger next version should add calibration, nested cross-validation, uncertainty analysis, leakage checks, and external validation planning.
+- Simplified physiological relationships cannot capture all comorbidities, treatments, demographic effects, or measurement artifacts.
+- High performance on synthetic data does not establish clinical usefulness.
 
 ## Author
 

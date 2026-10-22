@@ -9,6 +9,7 @@ python -m venv .venv
 .venv\Scripts\activate  # Windows
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+python scripts/generate_results.py
 python scripts/reproduce.py
 ```
 
@@ -16,10 +17,16 @@ On macOS or Linux, activate the environment with `source .venv/bin/activate`.
 
 ## Expected artifacts
 
-- `data/processed/synthetic_pulmonary_dataset.csv`
+- `data/raw/synthetic_pulmonary_dataset.csv`
+- `results/figures/eda/`
+- `results/figures/explainability/`
+- `results/figures/final_test/`
+- `results/tables/cv/`
+- `results/tables/explainability/`
+- `results/tables/final_test/`
 - `reports/pulmonary_disease_classification_executed.ipynb`
 
-The notebook regenerates the CSV rather than relying on the committed copy. The committed dataset allows immediate inspection and provides a baseline artifact.
+The results script regenerates the CSV, model comparison, final evaluation, and interpretation artifacts rather than relying on hidden notebook state. The committed files allow immediate inspection and provide a reproducible baseline.
 
 ## Verification
 

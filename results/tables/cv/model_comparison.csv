@@ -1,0 +1,4 @@
+model,cv_macro_f1,test_accuracy,test_precision_macro,test_recall_macro,test_macro_f1,best_parameters
+Random Forest,0.9615200405732903,0.9596899224806201,0.9557995296020507,0.9641004366004366,0.9597516922628758,"{""max_depth"": 9, ""n_estimators"": 50}"
+Gaussian Naive Bayes,0.9612337999985519,0.9627906976744186,0.9592583761428909,0.9691317016317015,0.9640732004092314,"{""var_smoothing"": 1e-07}"
+Decision Tree,0.9065852574444236,0.9271317829457364,0.9237200902368065,0.9289452214452215,0.9258936341940152,"{""class_weight"": null, ""criterion"": ""entropy"", ""max_depth"": 9}"

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="220" viewBox="0 0 1120 220" role="img" aria-labelledby="title desc">
+  <title id="title">Synthetic pulmonary disease classification workflow</title>
+  <desc id="desc">A five-stage workflow from synthetic cohort generation to model interpretation.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5b677a"/>
+    </marker>
+    <style>
+      .box { fill: #f6f9fc; stroke: #3569a8; stroke-width: 2; rx: 14; }
+      .head { font: 700 17px Arial, sans-serif; fill: #17324d; text-anchor: middle; }
+      .body { font: 13px Arial, sans-serif; fill: #40566e; text-anchor: middle; }
+      .line { stroke: #5b677a; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1120" height="220" fill="white"/>
+  <g transform="translate(20 55)"><rect class="box" width="180" height="110"/><text class="head" x="90" y="35">Synthetic cohort</text><text class="body" x="90" y="62">7 classes · 15 features</text><text class="body" x="90" y="84">Fixed seed and overlap</text></g>
+  <line class="line" x1="200" y1="110" x2="235" y2="110"/>
+  <g transform="translate(245 55)"><rect class="box" width="180" height="110"/><text class="head" x="90" y="35">Validation &amp; EDA</text><text class="body" x="90" y="62">Schema and ranges</text><text class="body" x="90" y="84">Balance and correlations</text></g>
+  <line class="line" x1="425" y1="110" x2="460" y2="110"/>
+  <g transform="translate(470 55)"><rect class="box" width="180" height="110"/><text class="head" x="90" y="35">Locked split</text><text class="body" x="90" y="62">70% development</text><text class="body" x="90" y="84">30% stratified test</text></g>
+  <line class="line" x1="650" y1="110" x2="685" y2="110"/>
+  <g transform="translate(695 55)"><rect class="box" width="180" height="110"/><text class="head" x="90" y="35">Model selection</text><text class="body" x="90" y="62">3-fold CV · macro-F1</text><text class="body" x="90" y="84">DT · NB · RF</text></g>
+  <line class="line" x1="875" y1="110" x2="910" y2="110"/>
+  <g transform="translate(920 55)"><rect class="box" width="180" height="110"/><text class="head" x="90" y="35">Final evaluation</text><text class="body" x="90" y="62">Per-class metrics</text><text class="body" x="90" y="84">Permutation importance</text></g>
+</svg>
